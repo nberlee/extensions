@@ -1,3 +1,9 @@
+# Friendy fork
+
+This is a friendly fork, only here as the Turing RK1 has a different kernel, therefor it needs different extensions for kernel module drivers.
+Also please use the *rk3588* extension and make sure to add `rockchip-cpufreq` to the `machine.kernel.modules` in your machine config.
+See: [rk3588](sbcs/rk3588) extension
+
 # Talos Linux System Extensions
 
 This repo serves as a central place for publishing supported extensions to Talos Linux.
@@ -17,24 +23,17 @@ The extension image is composed of a `manifest.yaml` file that provides informat
 In order to find a container reference for a system extension compatible with your Talos Linux version, you can use the following command:
 
 ```bash
-crane export ghcr.io/siderolabs/extensions:v<talos-version> | tar x -O image-digests | grep <extension-name>
+crane export ghcr.io/nberlee/extensions:v<talos-version> | tar x -O image-digests | grep <extension-name>
 ```
 
 For example, to find a compatible version of the `gasket-driver` extension for Talos v1.5.3, you can run:
 
 ```bash
-$ crane export ghcr.io/siderolabs/extensions:v1.5.3 | tar x -O image-digests | grep gasket-driver
-ghcr.io/siderolabs/gasket-driver:97aeba58-v1.5.3@sha256:c786edb356edae3b451cb82d5322f94e54ea0710195181b93ae37ccc8e7ba908
+$ crane export ghcr.io/nberlee/extensions:v1.5.3 | tar x -O image-digests | grep gasket-driver
+ghcr.io/nberlee/gasket-driver:97aeba58-v1.5.3@sha256:c786edb356edae3b451cb82d5322f94e54ea0710195181b93ae37ccc8e7ba908
 ```
 
 Please always use the pinned digest when referencing an extension image.
-
-All extensions are signed with Google Accounts OIDC issuer matching `@siderolabs.com` domain, so the image signatures can be verified, for example:
-
-```bash
-cosign verify --certificate-identity-regexp '@siderolabs\.com$' --certificate-oidc-issuer https://accounts.google.com ghcr.io/siderolabs/extensions:v1.5.3
-cosign verify --certificate-identity-regexp '@siderolabs\.com$' --certificate-oidc-issuer https://accounts.google.com ghcr.io/siderolabs/gasket-driver:97aeba58-v1.5.3@sha256:c786edb356edae3b451cb82d5322f94e54ea0710195181b93ae37ccc8e7ba908
-```
 
 ## Extension Catalog
 
@@ -42,82 +41,59 @@ cosign verify --certificate-identity-regexp '@siderolabs\.com$' --certificate-oi
 
 | Name                                | Image                                                                                       | Description                                     | Version Format                     |
 | ----------------------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------------- | ---------------------------------- |
-| [gvisor](container-runtime/gvisor/) | [ghcr.io/siderolabs/gvisor](https://github.com/siderolabs/extensions/pkgs/container/gvisor) | [gVisor](https://gvisor.dev/) container runtime | `upstream version`-`talos version` |
-| [stargz-snapshotter](container-runtime/stargz-snapshotter/) | [ghcr.io/siderolabs/stargz-snapshotter](https://github.com/siderolabs/extensions/pkgs/container/stargz-snapshotter) | [Stargz Snapshotter](https://github.com/containerd/stargz-snapshotter) container runtime | `upstream version`-`talos version` |
-| [ecr-credential-provider](container-runtime/ecr-credential-provider) | [ghcr.io/siderolabs/ecr-credential-provider](https://github.com/siderolabs/extensions/pkgs/container/ecr-credential-provider) | [ECR Credential Provider](https://github.com/kubernetes/cloud-provider-aws/tree/master/cmd/ecr-credential-provider) kubelet plugin | `upstream version` |
 
 ### Firmware
 
 | Name                                               | Image                                                                                                               | Description                 | Version Format           |
 | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | --------------------------- | ------------------------ |
-| [amd-ucode](firmware/amd-ucode/)                   | [ghcr.io/siderolabs/amd-ucode](https://github.com/siderolabs/extensions/pkgs/container/amd-ucode)                   | AMD CPU microcode updates   | `linux firmware version` |
-| [amdgpu-firmware](firmware/amdgpu-firmware/)       | [ghcr.io/siderolabs/amdgpu-firmware](https://github.com/siderolabs/extensions/pkgs/container/amdgpu-firmware)       | AMD GPU firmware            | `linux firmware version` |
-| [bnx2-bnx2x](firmware/bnx2-bnx2x/)                 | [ghcr.io/siderolabs/bnx2-bnx2x](https://github.com/siderolabs/extensions/pkgs/container/bnx2-bnx2x)                 | Broadcom NetXtreme firmware | `linux firmware version` |
-| [chelsio-firmware](firmware/chelsio-firmware/)     | [ghcr.io/siderolabs/chelsio-firmware](https://github.com/siderolabs/extensions/pkgs/container/chelsio-firmware)     | Chelsio NIC firmware        | `linux firmware version` |
-| [i915-ucode](firmware/i915-ucode/)                 | [ghcr.io/siderolabs/i915-ucode](https://github.com/siderolabs/extensions/pkgs/container/i915-ucode)                 | Intel GPU firmware          | `linux firmware version` |
-| [intel-ice-firmware](firmware/intel-ice-firmware/) | [ghcr.io/siderolabs/intel-ice-firmware](https://github.com/siderolabs/extensions/pkgs/container/intel-ice-firmware) | Intel ICE NIC firmware      | `linux firmware version` |
-| [intel-ucode](firmware/intel-ucode/)               | [ghcr.io/siderolabs/intel-ucode](https://github.com/siderolabs/extensions/pkgs/container/intel-ucode)               | Intel CPU microcode updates | `upstream version`       |
-| [qlogic-firmware](firmware/qlogic-firmware/)       | [ghcr.io/siderolabs/qlogic-firmware](https://github.com/siderolabs/extensions/pkgs/container/qlogic-firmware)       | Qlogic firmware             | `linux firmware version` |
-| [realtek-firmware](firmware/realtek-firmware/)     | [ghcr.io/siderolabs/realtek-firmware](https://github.com/siderolabs/extensions/pkgs/container/realtek-firmware)     | Realtek firmware            | `linux firmware version` |
 
 ### Drivers
 
-| Name                                 | Image                                                                                                                                       | Description                          | Version Format                                        |
-| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ----------------------------------------------------- |
-| [chelsio](drivers/chelsio/)          | [ghcr.io/siderolabs/chelsio-drivers](https://github.com/siderolabs/extensions/pkgs/container/chelsio-drivers)                               | Chelsio NIC drivers                  | `talos version`                                       |
-| [gasket](drivers/gasket/)            | [ghcr.io/siderolabs/gasket-driver](https://github.com/siderolabs/extensions/pkgs/container/gasket-driver)                                   | Driver for Google Coral PCIe devices | `gasket driver upstream short commit`-`talos version` |
-| [nvidia](nvidia-gpu/nvidia-modules/) | [ghcr.io/siderolabs/nvidia-open-gpu-kernel-modules](https://github.com/siderolabs/extensions/pkgs/container/nvidia-open-gpu-kernel-modules) | NVIDIA OSS Driver                    | `nvidia driver upstream version`-`talos version`      |
-| [thunderbolt](drivers/thunderbolt/)  | [ghcr.io/siderolabs/thunderbolt](https://github.com/siderolabs/extensions/pkgs/container/thunderbolt)                                       | Thunderbolt drivers                  | `talos version`                                       |
-| [usb-modem](drivers/usb-modem/)      | [ghcr.io/siderolabs/usb-modem-drivers](https://github.com/siderolabs/extensions/pkgs/container/usb-modem-drivers)                           | USB Modem drivers                    | `talos version`                                       |
+| Name                                 | Image                                                                                                       | Description                          | Version Format                                        |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------- | ------------------------------------ | ----------------------------------------------------- |
+| [usb-modem](drivers/usb-modem/)      | [ghcr.io/nberlee/usb-modem-drivers](https://github.com/nberlee/extensions/pkgs/container/usb-modem-drivers) | USB Modem drivers                    | `talos version`                                       |
 
 ### Miscellaneous
 
 | Name                            | Image                                                                                             | Description                        | Version Format     |
 | ------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------------- | ------------------ |
-| [binfmt-misc](misc/binfmt-misc) | [ghcr.io/siderolabs/binfmt-misc](https://github.com/siderolabs/extensions/pkgs/container/binfmt-misc) | Miscellaneous Binary Format | `talos version`                                       |
+| [binfmt-misc](misc/binfmt-misc) | [ghcr.io/nberlee/binfmt-misc](https://github.com/nberlee/extensions/pkgs/container/binfmt-misc) | Miscellaneous Binary Format | `talos version`                                       |
 
 ### Network
 
 | Name                            | Image                                                                                             | Description                        | Version Format     |
 | ------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------------- | ------------------ |
-| [tailscale](network/tailscale/) | [ghcr.io/siderolabs/tailscale](https://github.com/siderolabs/extensions/pkgs/container/tailscale) | [Tailscale](https://tailscale.com) | `upstream version` |
+
+### SBCs
+| Name                  | Image                                                          | Description                       | Version Format     |
+| --------------------- | -------------------------------------------------------------- | --------------------------------- | ------------------ |
+| [rk3588](sbcs/rk3588) | [ghcr.io/nberlee/rk3588](https://github.com/nberlee/extensions | Support modules for RK3588 boards | `talos version`    |
+
 
 ### Storage
 
 | Name                                | Image                                                                                                 | Description         | Version Format                     |
 | ----------------------------------- | ----------------------------------------------------------------------------------------------------- | ------------------- | ---------------------------------- |
-| [iscsi-tools](storage/iscsi-tools/) | [ghcr.io/siderolabs/iscsi-tools](https://github.com/siderolabs/extensions/pkgs/container/iscsi-tools) | Open iSCSI tools    | `v0.1.0`                           |
-| [mdadm](storage/mdadm/)             | [ghcr.io/siderolabs/mdadm](https://github.com/siderolabs/extensions/pkgs/container/mdadm) | manage MD devices tool | `upstream version`-`talos version`                    |
-| [drbd](storage/drbd/)               | [ghcr.io/siderolabs/drbd](https://github.com/siderolabs/extensions/pkgs/container/drbd)               | DRBD driver module  | `upstream version`-`talos version` |
-| [zfs](storage/zfs/)                 | [ghcr.io/siderolabs/zfs](https://github.com/siderolabs/extensions/pkgs/container/zfs)                 | ZFS driver module   | `upstream version`-`talos version` |
-| [btrfs](storage/btrfs/)             | [ghcr.io/siderolabs/btrfs](https://github.com/siderolabs/extensions/pkgs/container/btrfs)             | BTRFS driver module | `talos version`                    |
 
 ### Power
 
 | Name                            | Image                                                                                                     | Description                                                    | Version Format                     |
 | ------------------------------- | --------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- | ---------------------------------- |
-| [nut-client](power/nut-client/) | [ghcr.io/siderolabs/nut-client](https://github.com/siderolabs/talos-extensions/pkgs/container/nut-client) | [Network UPS Tools](https://networkupstools.org) upsmon client | `upstream version`-`talos version` |
 
 ### Guest Agents
 
 | Name                                                   | Image                                                                                                                     | Description                                                            | Version Format     |
 | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ------------------ |
-| [qemu-guest-agent](guest-agents/qemu-guest-agent/)     | [ghcr.io/siderolabs/qemu-guest-agent](https://github.com/siderolabs/talos-extensions/pkgs/container/qemu-guest-agent)     | [QEMU Guest Agent](https://wiki.qemu.org/Features/GuestAgent)          | `upstream version` |
-| [xe-guest-utilities](guest-agents/xe-guest-utilities/) | [ghcr.io/siderolabs/xe-guest-utilities](https://github.com/siderolabs/talos-extensions/pkgs/container/xe-guest-utilities) | [xe-guest-utilities](https://github.com/xenserver/xe-guest-utilitiest) | `upstream version` |
 
 ### NVIDIA GPU
 
 | Name                                                             | Description                                                                                                                        | Version Format                     |
 | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
-| [nvidia-container-toolkit](nvidia-gpu/nvidia-container-toolkit/) | Tools to run [NVIDIA GPU workloads](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/overview.html) in containers | `driver version`-`toolkit version` |
-| [nvidia-fabricmanager](nvidia-gpu/nvidia-fabricmanager/)         | [NVIDIA fabric manager](https://docs.nvidia.com/datacenter/tesla/pdf/fabric-manager-user-guide.pdf) support for GPU workloads      | `driver version`                   |
-| [nvidia-open-gpu-kernel-modules](nvidia-gpu/nvidia-modules/)     | NVIDIA driver kernel modules                                                                                                       | `driver version`-`talos version`   |
 
 #### Tools
 
 | Name                                  | Description                        | Version Format  |
 | ------------------------------------- | ---------------------------------- | --------------- |
-| [util-linux-tools](tools/util-linux/) | Util Linux tools (only fstrim now) | `talos version` |
 
 ## Building Extensions
 
