@@ -1,0 +1,10 @@
+modules.order
+modules.builtin
+modules.builtin.modinfo
+kernel/drivers/cpufreq/rockchip-cpufreq.ko
+kernel/drivers/crypto/rockchip/rk_crypto2.ko
+kernel/drivers/regulator/rk808-regulator.ko
+kernel/drivers/mfd/rk8xx-core.ko
+kernel/drivers/mfd/rk8xx-spi.ko
+kernel/crypto/sm3_generic.ko
+kernel/drivers/char/hw_random/rockchip-rng.ko
