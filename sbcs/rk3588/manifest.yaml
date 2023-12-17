@@ -1,0 +1,10 @@
+version: v1alpha1
+metadata:
+  name: rk3588-drivers
+  version: "$VERSION"
+  author: Nico Berlee
+  description: |
+    This system extension provides drivers needed for RK3588 boards.
+  compatibility:
+    talos:
+      version: ">= v1.6.0"

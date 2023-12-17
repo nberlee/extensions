@@ -16,7 +16,7 @@ ifeq ($(GOARCH),x86_64)
   GOARCH := amd64
 endif
 REGISTRY ?= ghcr.io
-USERNAME ?= siderolabs
+USERNAME ?= nberlee
 REGISTRY_AND_USERNAME ?= $(REGISTRY)/$(USERNAME)
 KRES_IMAGE ?= ghcr.io/siderolabs/kres:latest
 CONFORMANCE_IMAGE ?= ghcr.io/siderolabs/conform:latest
@@ -35,7 +35,7 @@ BLDR := docker run --rm --user $(shell id -u):$(shell id -g) --volume $(PWD):/sr
 # docker build settings
 
 BUILD := docker buildx build
-PLATFORM ?= linux/amd64,linux/arm64
+PLATFORM ?= linux/arm64
 PROGRESS ?= auto
 PUSH ?= false
 CI_ARGS ?=
@@ -46,45 +46,19 @@ COMMON_ARGS += --platform=$(PLATFORM)
 COMMON_ARGS += --build-arg=SOURCE_DATE_EPOCH=$(SOURCE_DATE_EPOCH)
 COMMON_ARGS += --build-arg=TAG="$(TAG)"
 COMMON_ARGS += --build-arg=PKGS="$(PKGS)"
+COMMON_ARGS += --build-arg=PKG_KERNEL="$(PKG_KERNEL)"
 
 # targets defines all the available targets
 
-TARGETS = amdgpu-firmware
-TARGETS += amd-ucode
-TARGETS += binfmt-misc
-TARGETS += bnx2-bnx2x
-TARGETS += btrfs
-TARGETS += chelsio-drivers
-TARGETS += chelsio-firmware
-TARGETS += drbd
-TARGETS += ecr-credential-provider
-TARGETS += fuse3
-TARGETS += gasket-driver
-TARGETS += gvisor
-TARGETS += hello-world-service
-TARGETS += i915-ucode
-TARGETS += intel-ice-firmware
-TARGETS += intel-ucode
-TARGETS += iscsi-tools
-TARGETS += mdadm
-TARGETS += nut-client
-TARGETS += nvidia-container-toolkit
-TARGETS += nvidia-fabricmanager
-TARGETS += nvidia-open-gpu-kernel-modules
-TARGETS += qemu-guest-agent
-TARGETS += stargz-snapshotter
-TARGETS += tailscale
-TARGETS += thunderbolt
+TARGETS = binfmt-misc
+TARGETS += rk3588
 TARGETS += usb-modem-drivers
-TARGETS += util-linux-tools
-TARGETS += xe-guest-utilities
-TARGETS += zfs
-NONFREE_TARGETS = nonfree-kmod-nvidia
 
 # extra variables
 
 EXTENSIONS_IMAGE_REF ?= $(REGISTRY_AND_USERNAME)/extensions:$(TAG)
 PKGS ?= v1.6.0-5-g3ae2450
+PKG_KERNEL ?= ghcr.io/nberlee/kernel:v1.6.0-7-g9acbe68
 
 # help menu
 
