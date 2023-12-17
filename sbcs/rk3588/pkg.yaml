@@ -1,4 +1,4 @@
-name: binfmt-misc
+name: rk3588
 variant: scratch
 shell: /toolchain/bin/bash
 dependencies:
