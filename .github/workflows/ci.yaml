@@ -61,6 +61,7 @@ jobs:
         if: github.event_name != 'pull_request'
         env:
           USERNAME: ${{ github.repository_owner }}
+          CI_ARGS: --provenance=true
         run: |
           make  PUSH=true 
       - name: Retrieve PR labels
