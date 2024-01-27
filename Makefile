@@ -199,7 +199,7 @@ internal/extensions/descriptions.yaml: internal/extensions/image-digests
 	@echo "Generating image descriptions..."
 	@echo -n "" > internal/extensions/descriptions.yaml
 	@for image in $(shell cat internal/extensions/image-digests); do \
-	  crane export $$image - | tar x -O --occurrence=1 manifest.yaml | yq -r ". += {\"$$image\": {\"author\": .metadata.author, \"description\": .metadata.description}} | del(.metadata, .version)" - >> internal/extensions/descriptions.yaml; \
+	  crane export $$image --platform linux/arm64 - | tar x -O --occurrence=1 manifest.yaml | yq -r ". += {\"$$image\": {\"author\": .metadata.author, \"description\": .metadata.description}} | del(.metadata, .version)" - >> internal/extensions/descriptions.yaml; \
 	done
 
 .PHONY: sign-images
