@@ -51,6 +51,7 @@ COMMON_ARGS += --build-arg=PKG_KERNEL="$(PKG_KERNEL)"
 # targets defines all the available targets
 
 TARGETS = binfmt-misc
+TARGETS += gasket-driver
 TARGETS += rk3588
 TARGETS += usb-modem-drivers
 

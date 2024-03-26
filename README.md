@@ -53,6 +53,7 @@ Please always use the pinned digest when referencing an extension image.
 
 | Name                                 | Image                                                                                                       | Description                          | Version Format                                        |
 | ------------------------------------ | ----------------------------------------------------------------------------------------------------------- | ------------------------------------ | ----------------------------------------------------- |
+| [gasket](drivers/gasket/)            | [ghcr.io/siderolabs/gasket-driver](https://github.com/siderolabs/extensions/pkgs/container/gasket-driver)                                   | Driver for Google Coral PCIe devices | `gasket driver upstream short commit`-`talos version` |
 | [usb-modem](drivers/usb-modem/)      | [ghcr.io/nberlee/usb-modem-drivers](https://github.com/nberlee/extensions/pkgs/container/usb-modem-drivers) | USB Modem drivers                    | `talos version`                                       |
 
 ### Miscellaneous
