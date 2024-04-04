@@ -58,7 +58,7 @@ TARGETS += usb-modem-drivers
 
 EXTENSIONS_IMAGE_REF ?= $(REGISTRY_AND_USERNAME)/extensions:$(TAG)
 PKGS ?= v1.6.0-27-gdf44f94
-PKG_KERNEL ?= ghcr.io/nberlee/kernel:v1.6.0-29-g7be6f52
+PKG_KERNEL ?= ghcr.io/nberlee/kernel:v1.6.0-32-g3bfb6b8
 
 # help menu
 
