@@ -61,7 +61,7 @@ TARGETS += usb-modem-drivers
 EXTENSIONS_IMAGE_REF ?= $(REGISTRY_AND_USERNAME)/extensions:$(TAG)
 PKGS ?= v1.7.0-9-g76bd73c
 PKGS_PREFIX ?= ghcr.io/siderolabs
-PKG_KERNEL ?= ghcr.io/nberlee/kernel:f949955
+PKG_KERNEL ?= ghcr.io/nberlee/kernel:v1.7.1
 
 # help menu
 
