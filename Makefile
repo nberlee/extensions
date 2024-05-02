@@ -14,7 +14,7 @@ OPERATING_SYSTEM := $(shell uname -s | tr '[:upper:]' '[:lower:]')
 GOARCH := $(shell uname -m | sed 's/x86_64/amd64/' | sed 's/aarch64/arm64/')
 SOURCE_DATE_EPOCH := $(shell git log -1 --pretty=%ct)
 REGISTRY ?= ghcr.io
-USERNAME ?= siderolabs
+USERNAME ?= nberlee
 REGISTRY_AND_USERNAME ?= $(REGISTRY)/$(USERNAME)
 KRES_IMAGE ?= ghcr.io/siderolabs/kres:latest
 CONFORMANCE_IMAGE ?= ghcr.io/siderolabs/conform:latest
@@ -28,7 +28,7 @@ BLDR := docker run --rm --user $(shell id -u):$(shell id -g) --volume $(PWD):/sr
 # docker build settings
 
 BUILD := docker buildx build
-PLATFORM ?= linux/amd64,linux/arm64
+PLATFORM ?= linux/arm64
 PROGRESS ?= auto
 PUSH ?= false
 CI_ARGS ?=
@@ -40,54 +40,20 @@ COMMON_ARGS += --build-arg=SOURCE_DATE_EPOCH=$(SOURCE_DATE_EPOCH)
 COMMON_ARGS += --build-arg=TAG="$(TAG)"
 COMMON_ARGS += --build-arg=PKGS="$(PKGS)"
 COMMON_ARGS += --build-arg=PKGS_PREFIX="$(PKGS_PREFIX)"
+COMMON_ARGS += --build-arg=PKG_KERNEL="$(PKG_KERNEL)"
+
+# targets defines all the available targets
+
+TARGETS = binfmt-misc
+TARGETS += rk3588
+TARGETS += usb-modem-drivers
 
 # extra variables
 
 EXTENSIONS_IMAGE_REF ?= $(REGISTRY_AND_USERNAME)/extensions:$(TAG)
 PKGS ?= v1.7.0-14-g9caa8be
 PKGS_PREFIX ?= ghcr.io/siderolabs
-
-# targets defines all the available targets
-
-TARGETS = amdgpu-firmware
-TARGETS += amd-ucode
-TARGETS += binfmt-misc
-TARGETS += bnx2-bnx2x
-TARGETS += btrfs
-TARGETS += chelsio-drivers
-TARGETS += chelsio-firmware
-TARGETS += drbd
-TARGETS += ecr-credential-provider
-TARGETS += fuse3
-TARGETS += gasket-driver
-TARGETS += gvisor
-TARGETS += gvisor-debug
-TARGETS += hello-world-service
-TARGETS += i915-ucode
-TARGETS += intel-ice-firmware
-TARGETS += intel-ucode
-TARGETS += iscsi-tools
-TARGETS += kata-containers
-TARGETS += mdadm
-TARGETS += nut-client
-TARGETS += nvidia-container-toolkit
-TARGETS += nvidia-fabricmanager
-TARGETS += nvidia-open-gpu-kernel-modules
-TARGETS += qemu-guest-agent
-TARGETS += qlogic-firmware
-TARGETS += realtek-firmware
-TARGETS += spin
-TARGETS += stargz-snapshotter
-TARGETS += tailscale
-TARGETS += thunderbolt
-TARGETS += usb-modem-drivers
-TARGETS += util-linux-tools
-TARGETS += v4l-uvc-drivers
-TARGETS += vmtoolsd-guest-agent
-TARGETS += wasmedge
-TARGETS += xen-guest-agent
-TARGETS += zfs
-NONFREE_TARGETS = nonfree-kmod-nvidia
+PKG_KERNEL ?= ghcr.io/nberlee/kernel:f949955
 
 # help menu
 
