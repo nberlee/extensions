@@ -51,7 +51,7 @@ COMMON_ARGS += --build-arg=PKG_KERNEL="$(PKG_KERNEL)"
 EXTENSIONS_IMAGE_REF ?= $(REGISTRY_AND_USERNAME)/extensions:$(TAG)
 PKGS ?= v1.8.0-16-g71d23b4
 PKGS_PREFIX ?= ghcr.io/siderolabs
-PKG_KERNEL ?= ghcr.io/nberlee/kernel:v1.8.1-2-g89573e9
+PKG_KERNEL ?= ghcr.io/nberlee/kernel:v1.8.1-5-gd3b8208
 
 # targets defines all the available targets
 
